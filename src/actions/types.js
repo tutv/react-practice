@@ -1,0 +1,12 @@
+export const SET_PORTFOLIO = "SET_PORTFOLIO";
+export const SELL_STOCK = "SELL_STOCK";
+export const BUY_STOCK = "BUY_STOCK";
+export const INCREASE_FUNDS = "INCREASE_FUNDS";
+
+export const REQUEST_ADD_TODO = "REQUEST_ADD_TODO";
+export const ADD_TODO = "ADD_TODO";
+export const ADD_TODO_SUCCESS = "ADD_TODO_SUCCESS";
+export const ADD_TODO_FAILURE = "ADD_TODO_FAILURE";
+export const UPDATE_LIST_TODOS = "UPDATE_LIST_TODOS";
+export const COMPLETE_TODO = "COMPLETE_TODO";
+export const INCOMPLETE_TODO = "INCOMPLETE_TODO";

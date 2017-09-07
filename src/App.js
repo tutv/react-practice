@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Route} from "react-router-dom";
-import Home from "./components/Home";
+import ListTodo from "./components/ListTodo";
 
 class App extends Component {
     render() {
@@ -8,7 +8,7 @@ class App extends Component {
             <div className="App">
                 <div className="row">
                     <div className="col-xs-12">
-                        <Route path="/" component={Home}/>
+                        <Route path="/" component={ListTodo}/>
                     </div>
                 </div>
             </div>
