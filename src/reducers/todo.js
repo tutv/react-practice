@@ -1,11 +1,9 @@
 import {createReducer} from "redux-create-reducer";
+import {fromJS, List} from "immutable";
 
-import {ADD_TODO, COMPLETE_TODO, INCOMPLETE_TODO, UPDATE_LIST_TODOS} from "../actions/types";
+import {ADD_TODO, COMPLETE_TODO, INCOMPLETE_TODO, REMOVE_TODO, UPDATE_LIST_TODOS} from "../constants/types";
 
-const initState = {
-    byIds: {},
-    ids: []
-};
+const initState = List();
 
 export const namespace = 'todo';
 
@@ -13,46 +11,45 @@ export const reducer = createReducer(initState, {
     [UPDATE_LIST_TODOS](state, action) {
         const {data} = action;
 
-        let byIds = {};
-        let ids = [];
-        for (let key in data) {
-            ids.push(key);
+        let list = [];
+        for (let id in data) {
+            let todo = {...data[id], id};
 
-            byIds[key] = {...data[key], id: key};
+            list.push(fromJS(todo));
         }
 
-        return {...state, byIds, ids};
+        return List(list);
     },
 
     [ADD_TODO](state, action) {
-        const {data} = action;
-        const {id} = data;
-        const {byIds, ids} = state;
-        byIds[id] = {...data};
-        ids.push(id);
+        const {todo} = action;
 
-        return {...state, byIds, ids};
+        return state.push(fromJS(todo));
     },
 
     [COMPLETE_TODO](state, action) {
-        const {id} = action;
+        const {todo} = action;
 
-        const {byIds, ids} = state;
-        const todo = {...byIds[id]};
-        todo['complete'] = true;
-        byIds[id] = todo;
-
-        return {...state, byIds, ids};
+        return state.update(state.findIndex((_todo) => {
+            return _todo === todo;
+        }), (todo) => {
+            return todo.set('complete', true);
+        });
     },
 
     [INCOMPLETE_TODO](state, action) {
-        const {id} = action;
+        const {todo} = action;
 
-        const {byIds, ids} = state;
-        const todo = {...byIds[id]};
-        todo['complete'] = false;
-        byIds[id] = todo;
+        return state.update(state.findIndex((_todo) => {
+            return _todo === todo;
+        }), (todo) => {
+            return todo.set('complete', false);
+        });
+    },
 
-        return {...state, byIds, ids};
+    [REMOVE_TODO](state, action) {
+        const {todo} = action;
+
+        return state.delete(state.findIndex(_todo => _todo === todo));
     }
 });

@@ -1,15 +1,22 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {toggleTodo} from "../actions/todo";
-import {getTodoItem} from "../selectors/todoSelectors";
+import {removeTodo, toggleTodo} from "../actions/todo";
 
 class Todo extends Component {
     render() {
-        const {todo} = this.props;
+        const todo = this.props.todo.toJS();
 
         return (
-            <li className={todo.complete ? 'completed' : ''} onClick={this.handleClick.bind(this)}>{todo.title}</li>
+            <li className={todo.complete ? 'completed' : ''}>
+                <span onClick={this.handleClick.bind(this)}>{todo.title}</span>
+                <span className="remove" onClick={this.handleRemove.bind(this)}>x</span>
+            </li>
         );
+    }
+
+    handleRemove() {
+        const {removeTodo, todo} = this.props;
+        removeTodo(todo);
     }
 
     handleClick() {
@@ -19,13 +26,12 @@ class Todo extends Component {
 }
 
 const mapDispatchToProps = {
-    toggleTodo
+    toggleTodo,
+    removeTodo
 };
 
 const mapStateToProps = (state, props) => {
-    return {
-        todo: getTodoItem(state, props)
-    }
+    return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Todo);

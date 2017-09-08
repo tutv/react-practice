@@ -23,9 +23,9 @@ class TodoList extends Component {
     _renderTodos() {
         const {todos} = this.props;
 
-        return todos.map((id) => {
+        return todos.map((todo) => {
             return (
-                <Todo key={id} id={id}/>
+                <Todo key={todo.get('id')} todo={todo}/>
             );
         });
     }
@@ -34,7 +34,7 @@ class TodoList extends Component {
     _handleAdd() {
         const {addTodo} = this.props;
 
-        addTodo('React practice');
+        addTodo('React practice - ' + (new Date()).getTime());
     }
 }
 

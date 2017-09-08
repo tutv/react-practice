@@ -1,9 +1,12 @@
 import db from "../services/api";
 
 import {
-    ADD_TODO, ADD_TODO_FAILURE, ADD_TODO_SUCCESS, COMPLETE_TODO, INCOMPLETE_TODO, REQUEST_ADD_TODO,
+    ADD_TODO, ADD_TODO_FAILURE, ADD_TODO_SUCCESS, COMPLETE_TODO, INCOMPLETE_TODO, REMOVE_TODO, REMOVE_TODO_FAILURE,
+    REMOVE_TODO_SUCCESS,
+    REQUEST_ADD_TODO,
+    REQUEST_REMOVE_TODO,
     UPDATE_LIST_TODOS
-} from "./types";
+} from "../constants/types";
 
 export const fetchListTodo = () => {
     return (dispatch) => {
@@ -38,7 +41,7 @@ export const addTodo = (title) => {
             .then(() => {
                 dispatch({
                     type: ADD_TODO,
-                    data: {
+                    todo: {
                         ...todo,
                         id
                     }
@@ -58,21 +61,49 @@ export const addTodo = (title) => {
 
 export const toggleTodo = (todo) => {
     return (dispatch) => {
-        const {id, complete} = todo;
+        const {id, complete} = todo.toJS();
 
         db.ref('todos/' + id).update({complete: !complete})
             .then(function () {
                 if (complete) {
                     dispatch({
                         type: INCOMPLETE_TODO,
-                        id
+                        todo
                     });
                 } else {
                     dispatch({
                         type: COMPLETE_TODO,
-                        id
+                        todo
                     });
                 }
             });
     };
+};
+
+export const removeTodo = (todo) => {
+    return (dispatch) => {
+        const {id} = todo.toJS();
+
+        dispatch({
+            type: REQUEST_REMOVE_TODO
+        });
+
+        db.ref('todos/' + id).remove()
+            .then(() => {
+                dispatch({
+                    type: REMOVE_TODO_SUCCESS
+                });
+
+                dispatch({
+                    type: REMOVE_TODO,
+                    todo
+                });
+            })
+            .catch(() => {
+                dispatch({
+                    type: REMOVE_TODO_FAILURE,
+                    id
+                });
+            });
+    }
 };
