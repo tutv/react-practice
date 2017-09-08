@@ -1,3 +1,5 @@
+import {createReducer} from "redux-create-reducer";
+
 import {ADD_TODO, COMPLETE_TODO, INCOMPLETE_TODO, UPDATE_LIST_TODOS} from "../actions/types";
 
 const initState = {
@@ -5,67 +7,52 @@ const initState = {
     ids: []
 };
 
-const todo = (state = initState, action) => {
-    switch (action.type) {
-        case UPDATE_LIST_TODOS: {
-            const {data} = action;
+export const namespace = 'todo';
 
-            let byIds = {};
-            let ids = [];
-            for (let key in data) {
-                ids.push(key);
+export const reducer = createReducer(initState, {
+    [UPDATE_LIST_TODOS](state, action) {
+        const {data} = action;
 
-                byIds[key] = {...data[key], id: key};
-            }
+        let byIds = {};
+        let ids = [];
+        for (let key in data) {
+            ids.push(key);
 
-            return {...state, byIds, ids};
+            byIds[key] = {...data[key], id: key};
         }
 
-        case ADD_TODO: {
-            const {data} = action;
-            const {id} = data;
-            const {byIds, ids} = state;
-            byIds[id] = {...data};
-            ids.push(id);
+        return {...state, byIds, ids};
+    },
 
-            return {...state, byIds, ids};
-        }
+    [ADD_TODO](state, action) {
+        const {data} = action;
+        const {id} = data;
+        const {byIds, ids} = state;
+        byIds[id] = {...data};
+        ids.push(id);
 
-        case COMPLETE_TODO: {
-            const {id} = action;
+        return {...state, byIds, ids};
+    },
 
-            const {byIds, ids} = state;
-            const todo = {...byIds[id]};
-            todo['complete'] = true;
-            byIds[id] = todo;
+    [COMPLETE_TODO](state, action) {
+        const {id} = action;
 
-            return {...state, byIds, ids};
-        }
+        const {byIds, ids} = state;
+        const todo = {...byIds[id]};
+        todo['complete'] = true;
+        byIds[id] = todo;
 
-        case INCOMPLETE_TODO: {
-            const {id} = action;
+        return {...state, byIds, ids};
+    },
 
-            const {byIds, ids} = state;
-            const todo = {...byIds[id]};
-            todo['complete'] = false;
-            byIds[id] = todo;
+    [INCOMPLETE_TODO](state, action) {
+        const {id} = action;
 
-            return {...state, byIds, ids};
-        }
+        const {byIds, ids} = state;
+        const todo = {...byIds[id]};
+        todo['complete'] = false;
+        byIds[id] = todo;
 
-        default:
-            return state;
+        return {...state, byIds, ids};
     }
-};
-
-export default todo;
-
-export const listTodo = (state) => {
-    return state.ids;
-};
-
-export const getTodoItem = (state, id) => {
-    const {byIds} = state;
-
-    return byIds[id];
-};
+});

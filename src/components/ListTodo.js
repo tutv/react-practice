@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {addTodo, fetchListTodo} from "../actions/todo";
-import {getListTodo} from "../reducers/index";
+import {getListTodo} from "../selectors/todoSelectors";
 import Todo from "./Todo";
 
 class TodoList extends Component {

@@ -1,8 +1,3 @@
-export const SET_PORTFOLIO = "SET_PORTFOLIO";
-export const SELL_STOCK = "SELL_STOCK";
-export const BUY_STOCK = "BUY_STOCK";
-export const INCREASE_FUNDS = "INCREASE_FUNDS";
-
 export const REQUEST_ADD_TODO = "REQUEST_ADD_TODO";
 export const ADD_TODO = "ADD_TODO";
 export const ADD_TODO_SUCCESS = "ADD_TODO_SUCCESS";

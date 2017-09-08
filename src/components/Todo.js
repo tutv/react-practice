@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {toggleTodo} from "../actions/todo";
-import {getTodoItem} from "../reducers/index";
+import {getTodoItem} from "../selectors/todoSelectors";
 
 class Todo extends Component {
     render() {
@@ -24,7 +24,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state, props) => {
     return {
-        todo: getTodoItem(state, props.id)
+        todo: getTodoItem(state, props)
     }
 };
 

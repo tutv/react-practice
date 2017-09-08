@@ -5376,6 +5376,10 @@ reduce-function-call@^1.0.1:
   dependencies:
     balanced-match "^0.4.2"
 
+redux-create-reducer@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/redux-create-reducer/-/redux-create-reducer-1.1.1.tgz#f9ea976a8d3e14c3f32898e25709183c93b0b214"
+
 redux-thunk@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"
@@ -5539,6 +5543,10 @@ require-uncached@^1.0.3:
 requires-port@1.0.x, requires-port@1.x.x:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
+
+reselect@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/reselect/-/reselect-3.0.1.tgz#efdaa98ea7451324d092b2b2163a6a1d7a9a2147"
 
 resolve-dir@^1.0.0:
   version "1.0.1"
