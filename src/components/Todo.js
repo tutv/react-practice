@@ -1,9 +1,11 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
+import PropTypes from "prop-types";
+
 import {removeTodo, toggleTodo} from "../actions/todo";
 import {getTodoItem} from "../selectors/todoSelectors";
 
-class Todo extends Component {
+export class Todo extends Component {
     render() {
         const todo = this.props.todo.toJS();
 
@@ -25,6 +27,13 @@ class Todo extends Component {
         toggleTodo(todo);
     }
 }
+
+Todo.propTypes = {
+    id: PropTypes.string.isRequired,
+    todo: PropTypes.object.isRequired,
+    toggleTodo: PropTypes.func.isRequired,
+    removeTodo: PropTypes.func.isRequired
+};
 
 const mapDispatchToProps = {
     toggleTodo,
