@@ -23,9 +23,9 @@ class TodoList extends Component {
     _renderTodos() {
         const {todos} = this.props;
 
-        return todos.map((todo) => {
+        return todos.map((id) => {
             return (
-                <Todo key={todo.get('id')} todo={todo}/>
+                <Todo key={id} id={id}/>
             );
         });
     }

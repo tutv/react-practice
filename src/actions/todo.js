@@ -6,7 +6,7 @@ import {
     REQUEST_ADD_TODO,
     REQUEST_REMOVE_TODO,
     UPDATE_LIST_TODOS
-} from "../constants/types";
+} from "../constants/actionTypes";
 
 export const fetchListTodo = () => {
     return (dispatch) => {
@@ -68,12 +68,12 @@ export const toggleTodo = (todo) => {
                 if (complete) {
                     dispatch({
                         type: INCOMPLETE_TODO,
-                        todo
+                        id
                     });
                 } else {
                     dispatch({
                         type: COMPLETE_TODO,
-                        todo
+                        id
                     });
                 }
             });
@@ -96,7 +96,7 @@ export const removeTodo = (todo) => {
 
                 dispatch({
                     type: REMOVE_TODO,
-                    todo
+                    id
                 });
             })
             .catch(() => {

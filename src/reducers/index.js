@@ -1,9 +1,9 @@
 import {combineReducers} from "redux-immutable";
 
-import * as todo from "./todo";
+import todo from "./todo";
 
 const app = combineReducers({
-    [todo.namespace]: todo.reducer
+    todo
 });
 
 export default app;

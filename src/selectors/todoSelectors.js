@@ -1,15 +1,15 @@
 import {createSelector} from "reselect";
-import * as todo from '../reducers/todo';
 
-const getTodos = (state) => state.get(todo.namespace);
+import * as todo from "../reducers/todo";
+
 const getItemId = (state, props) => props.id;
 
-export const getTodoItem = createSelector([getTodos, getItemId], (state, id) => {
+export const getTodoItem = createSelector([todo.getState, getItemId], (state, id) => {
     const byIds = state.get('byIds');
 
     return byIds.get(id);
 });
 
-export const getListTodo = createSelector(getTodos, (state) => {
-    return state;
+export const getListTodo = createSelector(todo.getState, (state) => {
+    return state.get('allIds');
 });

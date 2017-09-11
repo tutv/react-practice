@@ -1,55 +1,76 @@
 import {createReducer} from "redux-create-reducer";
-import {fromJS, List} from "immutable";
+import {combineReducers} from "redux-immutable";
+import {fromJS, List, Map} from "immutable";
 
-import {ADD_TODO, COMPLETE_TODO, INCOMPLETE_TODO, REMOVE_TODO, UPDATE_LIST_TODOS} from "../constants/types";
+import {ADD_TODO, COMPLETE_TODO, INCOMPLETE_TODO, REMOVE_TODO, UPDATE_LIST_TODOS} from "../constants/actionTypes";
 
-const initState = List();
-
-export const namespace = 'todo';
-
-export const reducer = createReducer(initState, {
+const byIds = createReducer(Map(), {
     [UPDATE_LIST_TODOS](state, action) {
         const {data} = action;
 
-        let list = [];
         for (let id in data) {
             let todo = {...data[id], id};
 
-            list.push(fromJS(todo));
+            state = state.set(id, fromJS(todo));
         }
 
-        return List(list);
+        return state;
     },
 
     [ADD_TODO](state, action) {
         const {todo} = action;
 
-        return state.push(fromJS(todo));
+        return state.set(todo.id, fromJS(todo));
     },
 
     [COMPLETE_TODO](state, action) {
-        const {todo} = action;
+        const {id} = action;
 
-        return state.update(state.findIndex((_todo) => {
-            return _todo === todo;
-        }), (todo) => {
-            return todo.set('complete', true);
-        });
+        return state.setIn([id, 'complete'], true);
     },
 
     [INCOMPLETE_TODO](state, action) {
-        const {todo} = action;
+        const {id} = action;
 
-        return state.update(state.findIndex((_todo) => {
-            return _todo === todo;
-        }), (todo) => {
-            return todo.set('complete', false);
-        });
+        return state.setIn([id, 'complete'], false);
     },
 
     [REMOVE_TODO](state, action) {
-        const {todo} = action;
+        const {id} = action;
 
-        return state.delete(state.findIndex(_todo => _todo === todo));
+        return state.delete(id);
     }
 });
+
+const allIds = createReducer(List(), {
+    [UPDATE_LIST_TODOS](state, action) {
+        const {data} = action;
+
+        for (let id in data) {
+            state = state.push(id);
+        }
+
+        return state;
+    },
+
+    [REMOVE_TODO](state, action) {
+        const {id} = action;
+
+        return state.filter((_id) => {
+            return id !== _id;
+        });
+    },
+
+    [ADD_TODO](state, action) {
+        const {todo} = action;
+
+        return state.push(todo.id);
+    },
+});
+
+export default combineReducers({
+    byIds,
+    allIds
+});
+
+export const getState = (state) => state.get('todo');

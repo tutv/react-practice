@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {removeTodo, toggleTodo} from "../actions/todo";
+import {getTodoItem} from "../selectors/todoSelectors";
 
 class Todo extends Component {
     render() {
@@ -31,7 +32,9 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state, props) => {
-    return {};
+    return {
+        todo: getTodoItem(state, props)
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Todo);
