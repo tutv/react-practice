@@ -1,8 +1,9 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {addTodo, fetchListTodo} from "../actions/todo";
+import {fetchListTodo} from "../actions/todo";
 import {getListTodo} from "../selectors/todoSelectors";
 import Todo from "./Todo";
+import NewTodo from "./NewTodo";
 
 class TodoList extends Component {
     componentWillMount() {
@@ -12,8 +13,9 @@ class TodoList extends Component {
 
     render() {
         return (
-            <div className="list-wrapper">
-                <button onClick={this._handleAdd.bind(this)}>Add</button>
+            <div className="todo-container">
+                <h1>Todo App</h1>
+                <NewTodo/>
 
                 {this._renderTodos()}
             </div>
@@ -29,13 +31,6 @@ class TodoList extends Component {
             );
         });
     }
-
-
-    _handleAdd() {
-        const {addTodo} = this.props;
-
-        addTodo('React practice - ' + (new Date()).getTime());
-    }
 }
 
 const mapStateToProps = (state) => {
@@ -45,7 +40,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-    addTodo,
     fetchListTodo
 };
 
