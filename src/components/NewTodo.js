@@ -13,7 +13,7 @@ export class NewTodo extends Component {
 
     render() {
         return (
-            <Form onSubmit={this._handleSubmit.bind(this)}>
+            <Form className='new-todo' onSubmit={this._handleSubmit.bind(this)}>
                 <Input onChange={this._onChangeTitle.bind(this)} value={this.state.title}/>
             </Form>
         );

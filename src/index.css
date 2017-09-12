@@ -6,3 +6,20 @@
     width: 500px;
     margin: 20px auto 5px;
 }
+
+.todo {
+    position: relative;
+}
+
+.todo .remove {
+    position: absolute;
+    top: 0;
+    right: 3px;
+    padding: 7px 10px;
+    cursor: pointer;
+    z-index: 99;
+}
+
+.new-todo {
+    margin-bottom: 20px;
+}

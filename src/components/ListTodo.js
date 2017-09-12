@@ -14,7 +14,7 @@ class TodoList extends Component {
     render() {
         return (
             <div className="row justify-content-center">
-                <div className="col-6">
+                <div className="col-sm-12 col-md-6 col-lg-4">
                     <h1>Todo App</h1>
                     <NewTodo/>
 
