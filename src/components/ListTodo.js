@@ -13,11 +13,13 @@ class TodoList extends Component {
 
     render() {
         return (
-            <div className="todo-container">
-                <h1>Todo App</h1>
-                <NewTodo/>
+            <div className="row justify-content-center">
+                <div className="col-6">
+                    <h1>Todo App</h1>
+                    <NewTodo/>
 
-                {this._renderTodos()}
+                    {this._renderTodos()}
+                </div>
             </div>
         );
     }

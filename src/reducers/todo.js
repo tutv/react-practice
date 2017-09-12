@@ -2,7 +2,10 @@ import {createReducer} from "redux-create-reducer";
 import {combineReducers} from "redux-immutable";
 import {fromJS, List, Map} from "immutable";
 
-import {ADD_TODO, COMPLETE_TODO, INCOMPLETE_TODO, REMOVE_TODO, UPDATE_LIST_TODOS} from "../constants/actionTypes";
+import {
+    ADD_TODO, COMPLETE_TODO, EDIT_TITLE_TODO, INCOMPLETE_TODO, REMOVE_TODO,
+    UPDATE_LIST_TODOS
+} from "../constants/actionTypes";
 
 const byIds = createReducer(Map(), {
     [UPDATE_LIST_TODOS](state, action) {
@@ -39,6 +42,11 @@ const byIds = createReducer(Map(), {
         const {id} = action;
 
         return state.delete(id);
+    },
+    [EDIT_TITLE_TODO](state, action) {
+        const {id, title} = action;
+
+        return state.setIn([id, 'title'], title);
     }
 });
 

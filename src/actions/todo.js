@@ -1,10 +1,11 @@
 import db from "../services/api";
 
 import {
-    ADD_TODO, ADD_TODO_FAILURE, ADD_TODO_SUCCESS, COMPLETE_TODO, INCOMPLETE_TODO, REMOVE_TODO, REMOVE_TODO_FAILURE,
+    ADD_TODO, ADD_TODO_FAILURE, ADD_TODO_SUCCESS, COMPLETE_TODO, EDIT_TITLE_TODO, INCOMPLETE_TODO, REMOVE_TODO,
+    REMOVE_TODO_FAILURE,
     REMOVE_TODO_SUCCESS,
     REQUEST_ADD_TODO,
-    REQUEST_REMOVE_TODO,
+    REQUEST_REMOVE_TODO, SAVE_TODO,
     UPDATE_LIST_TODOS
 } from "../constants/actionTypes";
 
@@ -16,7 +17,7 @@ export const fetchListTodo = () => {
             dispatch({
                 type: UPDATE_LIST_TODOS,
                 data: todos
-            })
+            });
         });
     }
 };
@@ -106,4 +107,34 @@ export const removeTodo = (todo) => {
                 });
             });
     }
+};
+
+export const editTitle = (todo, title) => {
+    return (dispatch) => {
+        const {id} = todo.toJS();
+
+        dispatch({
+            type: EDIT_TITLE_TODO,
+            id,
+            title
+        });
+    }
+};
+
+export const saveTodo = (todo) => {
+    return (dispatch) => {
+        const todoObject = todo.toJS();
+        const {id} = todoObject;
+
+        db.ref()
+            .update({
+                ['todos/' + id]: todoObject
+            })
+            .then(() => {
+                dispatch({
+                    type: SAVE_TODO,
+                    id
+                });
+            });
+    };
 };
