@@ -4,7 +4,7 @@
 
 # Technologies
 
-React + Redux + ImmutableJS + Reactstrap
+React + Redux + ImmutableJS + Reactstrap + Firebase
 
 ## Build Setup
 
