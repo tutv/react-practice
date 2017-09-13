@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "auth0-js": "^8.9.3",
     "axios": "^0.16.2",
     "babel-jest": "^21.0.2",
     "bootstrap": "4.0.0-beta",
