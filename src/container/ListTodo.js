@@ -2,8 +2,8 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {fetchListTodo} from "../actions/todo";
 import {getListTodo} from "../selectors/todoSelectors";
-import Todo from "./Todo";
-import NewTodo from "./NewTodo";
+import Todo from "../components/Todo";
+import NewTodo from "../components/NewTodo";
 
 class TodoList extends Component {
     componentWillMount() {
@@ -18,7 +18,9 @@ class TodoList extends Component {
                     <h1>Todo App</h1>
                     <NewTodo/>
 
-                    {this._renderTodos()}
+                    <div className="todo-list">
+                        {this._renderTodos()}
+                    </div>
                 </div>
             </div>
         );

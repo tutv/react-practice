@@ -1,16 +1,20 @@
-import db from "../services/api";
+import db from "../services/Api";
 
 import {
     ADD_TODO, ADD_TODO_FAILURE, ADD_TODO_SUCCESS, COMPLETE_TODO, EDIT_TITLE_TODO, INCOMPLETE_TODO, REMOVE_TODO,
     REMOVE_TODO_FAILURE,
     REMOVE_TODO_SUCCESS,
-    REQUEST_ADD_TODO,
+    REQUEST_ADD_TODO, REQUEST_FETCH_LIST_TODOS,
     REQUEST_REMOVE_TODO, SAVE_TODO,
     UPDATE_LIST_TODOS
 } from "../constants/actionTypes";
 
 export const fetchListTodo = () => {
     return (dispatch) => {
+        dispatch({
+            type: REQUEST_FETCH_LIST_TODOS
+        });
+
         db.ref('todos').once('value', function (snapshot) {
             const todos = snapshot.val();
 

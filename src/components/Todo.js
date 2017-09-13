@@ -82,10 +82,8 @@ const mapDispatchToProps = {
     saveTodo
 };
 
-const mapStateToProps = (state, props) => {
-    return {
-        todo: getTodoItem(state, props)
-    };
-};
+const mapStateToProps = (state, props) => ({
+    todo: getTodoItem(state, props)
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Todo);

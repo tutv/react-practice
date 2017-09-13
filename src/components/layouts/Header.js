@@ -2,7 +2,9 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from "reactstrap";
 import {Link} from "react-router-dom";
-import Auth from "../../auth/Auth";
+
+import {login} from "../../actions/auth";
+import {getProfile, isAuthenticated} from "../../selectors/authSelectors";
 
 class Header extends Component {
     constructor(props) {
@@ -11,13 +13,12 @@ class Header extends Component {
         this.state = {
             isOpen: false
         };
-
-        this.auth = new Auth();
     }
 
     _handleClickLogin(e) {
         e.preventDefault();
-        this.auth.login();
+        const {login} = this.props;
+        login();
     }
 
     _toggle() {
@@ -27,6 +28,16 @@ class Header extends Component {
     }
 
     render() {
+        const {isAuthenticated, getProfile} = this.props;
+
+        let link = null;
+        if (isAuthenticated) {
+            const name = getProfile.get('nickname');
+            link = <NavLink tag={Link} to="/settings">Hello <strong>{name}</strong></NavLink>;
+        } else {
+            link = <NavLink tag={Link} onClick={this._handleClickLogin.bind(this)} to="/login">Login</NavLink>;
+        }
+
         return (
             <div>
                 <Navbar color="faded" className='navbar-expand-lg' light toggleable>
@@ -35,7 +46,7 @@ class Header extends Component {
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                                <NavLink onClick={this._handleClickLogin.bind(this)} to="/login">Login</NavLink>
+                                {link}
                             </NavItem>
                         </Nav>
                     </Collapse>
@@ -47,4 +58,13 @@ class Header extends Component {
 
 Header.propTypes = {};
 
-export default connect(null, null)(Header);
+const mapDispatchToProps = {
+    login
+};
+
+const mapStateToProps = (state, props) => ({
+    isAuthenticated: isAuthenticated(state),
+    getProfile: getProfile(state),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
