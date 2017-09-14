@@ -12,7 +12,12 @@ import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import allReducers from "./reducers";
 
-const store = createStore(allReducers, composeWithDevTools(applyMiddleware(thunk)));
+let middlewareWrapper = applyMiddleware(thunk);
+if (process.env.NODE_ENV !== 'production') {
+    middlewareWrapper = composeWithDevTools(middlewareWrapper);
+}
+
+const store = createStore(allReducers, middlewareWrapper);
 
 ReactDOM.render(
     <Provider store={store}>
