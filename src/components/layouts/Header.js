@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from "reactstrap";
 import {Link} from "react-router-dom";
 
-import {login} from "../../actions/auth";
+import {login, logout} from "../../actions/auth";
 import {getProfile, isAuthenticated} from "../../selectors/authSelectors";
 
 class Header extends Component {
@@ -30,12 +30,18 @@ class Header extends Component {
     render() {
         const {isAuthenticated, getProfile} = this.props;
 
-        let link = null;
+        let navItem = null;
         if (isAuthenticated) {
             const name = getProfile.get('nickname');
-            link = <NavLink tag={Link} to="/settings">Hello <strong>{name}</strong></NavLink>;
+            navItem =
+                <NavItem>
+                    <NavLink tag={Link} to="/settings">Hello <strong>{name}</strong></NavLink>
+                </NavItem>;
         } else {
-            link = <NavLink tag={Link} onClick={this._handleClickLogin.bind(this)} to="/login">Login</NavLink>;
+            navItem = <NavItem>
+                <NavLink tag={Link} onClick={this._handleClickLogin.bind(this)}
+                         to="/login">Login</NavLink>
+            </NavItem>;
         }
 
         return (
@@ -45,21 +51,45 @@ class Header extends Component {
                     <NavbarBrand tag={Link} to="/">Todo App</NavbarBrand>
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
-                            <NavItem>
-                                {link}
-                            </NavItem>
+                            {navItem}
+
+                            {this.renderLogout()}
                         </Nav>
                     </Collapse>
                 </Navbar>
             </div>
         );
     }
+
+    renderLogout() {
+        const {isAuthenticated} = this.props;
+
+        if (!isAuthenticated) {
+            return null;
+        }
+
+        return (
+            <NavItem>
+                <NavLink tag={Link}
+                         onClick={this._handleLogout.bind(this)}
+                         to="/logout">Logout</NavLink>
+            </NavItem>
+        );
+    }
+
+    _handleLogout(e) {
+        e.preventDefault();
+
+        const {logout} = this.props;
+        logout();
+    }
 }
 
 Header.propTypes = {};
 
 const mapDispatchToProps = {
-    login
+    login,
+    logout
 };
 
 const mapStateToProps = (state, props) => ({

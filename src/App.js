@@ -3,9 +3,9 @@ import {connect} from "react-redux";
 import {Route} from "react-router-dom";
 import PropTypes from 'prop-types';
 
-import ListTodo from "./container/ListTodo";
+import ListTodo from "./containers/ListTodo";
 import Header from "./components/layouts/Header";
-import LoginCallback from "./container/LoginCallback";
+import LoginCallback from "./containers/LoginCallback";
 import {startupCheck} from "./actions/auth";
 
 class App extends Component {

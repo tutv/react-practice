@@ -3,22 +3,26 @@ import {connect} from "react-redux";
 
 import {authVerifyCallback} from "../actions/auth";
 import {isAuthenticated} from "../selectors/authSelectors";
+import {Redirect} from "react-router-dom";
 
 class LoginCallback extends Component {
-    componentWillUpdate() {
-        const {isAuthenticated, history} = this.props;
-
-        if (isAuthenticated) {
-            history.push('/');
-        }
-    }
-
-    render() {
+    componentWillMount() {
         const {location, authVerifyCallback} = this.props;
         const {hash} = location;
 
         if (/access_token|id_token|error/.test(hash)) {
             authVerifyCallback();
+        }
+    }
+
+    render() {
+        const {isAuthenticated} = this.props;
+        const redirectTo = {pathname: '/'};
+
+        if (isAuthenticated) {
+            return (
+                <Redirect to={redirectTo}/>
+            );
         }
 
         return (

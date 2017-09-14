@@ -4,7 +4,7 @@ import StorageService from "../services/Storage";
 import {
     AUTH_CHECK_STARTUP,
     AUTH_GET_PROFILE, AUTH_GET_PROFILE_FAILURE, AUTH_GET_PROFILE_SUCCESS,
-    AUTH_LOGIN,
+    AUTH_LOGIN, AUTH_LOGOUT,
     AUTH_VERIFY_CALLBACK, AUTH_VERIFY_CALLBACK_FAILURE,
     AUTH_VERIFY_CALLBACK_SUCCESS, AUTH_VERIFY_SET_DATA
 } from "../constants/actionTypes";
@@ -85,4 +85,14 @@ export const login = () => {
 
         AuthService.login();
     }
+};
+
+export const logout = () => {
+    return (dispatch) => {
+        dispatch({
+            type: AUTH_LOGOUT
+        });
+
+        AuthService.logout();
+    };
 };

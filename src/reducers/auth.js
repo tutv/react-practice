@@ -2,7 +2,7 @@ import {createReducer} from "redux-create-reducer";
 import {Map, fromJS} from "immutable";
 
 import {
-    AUTH_GET_PROFILE_SUCCESS, AUTH_VERIFY_CALLBACK, AUTH_VERIFY_CALLBACK_FAILURE,
+    AUTH_GET_PROFILE_SUCCESS, AUTH_LOGOUT, AUTH_VERIFY_CALLBACK, AUTH_VERIFY_CALLBACK_FAILURE,
     AUTH_VERIFY_SET_DATA
 } from "../constants/actionTypes";
 
@@ -25,6 +25,9 @@ export default createReducer(Map(), {
         const {profile} = action;
 
         return state.set('profile', profile);
+    },
+    [AUTH_LOGOUT](state, action) {
+        return Map();
     }
 });
 
