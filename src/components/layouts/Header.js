@@ -53,6 +53,8 @@ class Header extends Component {
                         <Nav className="ml-auto" navbar>
                             {navItem}
 
+                            <Link to="/abcc">Helo</Link>
+
                             {this.renderLogout()}
                         </Nav>
                     </Collapse>

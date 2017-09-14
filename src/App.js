@@ -1,12 +1,13 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {Route} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import PropTypes from 'prop-types';
 
 import ListTodo from "./containers/ListTodo";
 import Header from "./components/layouts/Header";
 import LoginCallback from "./containers/LoginCallback";
 import {startupCheck} from "./actions/auth";
+import PageNotFound from "./containers/PageNotFound";
 
 class App extends Component {
     componentWillMount() {
@@ -19,8 +20,11 @@ class App extends Component {
             <div className="App">
                 <Header/>
                 <div className="container-fluid">
-                    <Route exact path="/" component={ListTodo}/>
-                    <Route exact path="/callback" component={LoginCallback}/>
+                    <Switch>
+                        <Route exact path="/" component={ListTodo}/>
+                        <Route exact path="/callback" component={LoginCallback}/>
+                        <Route component={PageNotFound}/>
+                    </Switch>
                 </div>
             </div>
         );
